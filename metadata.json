@@ -1,0 +1,6 @@
+{
+  "name": "Barbearia do Felskipz",
+  "description": "Barbearia em Seropédica, Rio de Janeiro. Corte masculino, degradê, barba alinhada e descoloração com estilo, qualidade e agendamento rápido pelo WhatsApp.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
