@@ -1,3 +1,4 @@
+import { motion } from 'motion/react';
 import { BARBERSHOP_CONFIG, getWhatsAppBookingUrl } from '../config/barbershop';
 import { WhatsAppIcon } from './WhatsAppIcon';
 
@@ -15,14 +16,19 @@ export function FooterAndFloatingWhatsApp() {
 
   return (
     <>
-      <footer className="bg-[#070708] border-t border-white/10 py-14 sm:py-16">
+      <footer className="relative bg-[#050507] border-t border-white/10 py-14 sm:py-16 overflow-hidden">
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute top-0 inset-x-0 h-[1px] bg-gradient-to-r from-transparent via-[#D4AF37]/45 to-transparent"
+        />
+
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-12 gap-10 pb-10 border-b border-white/10">
             {/* Brand & Location */}
             <div className="md:col-span-5">
               <a
                 href="#inicio"
-                className="font-display text-2xl font-bold tracking-[0.08em] uppercase text-[#F5F5F2] inline-block mb-3"
+                className="font-display text-2xl font-extrabold tracking-[0.1em] uppercase text-[#F5F5F2] inline-block mb-3"
               >
                 {BARBERSHOP_CONFIG.brandName}
               </a>
@@ -39,7 +45,7 @@ export function FooterAndFloatingWhatsApp() {
 
             {/* Navigation */}
             <div className="md:col-span-3">
-              <h3 className="text-xs font-semibold tracking-[0.16em] uppercase text-[#C8A253] mb-4">
+              <h3 className="text-xs font-semibold tracking-[0.18em] uppercase text-[#E5C158] mb-4">
                 Navegação
               </h3>
               <ul className="space-y-2.5 text-sm text-[#A1A1AA]">
@@ -58,7 +64,7 @@ export function FooterAndFloatingWhatsApp() {
 
             {/* Hours & Direct WhatsApp */}
             <div className="md:col-span-4">
-              <h3 className="text-xs font-semibold tracking-[0.16em] uppercase text-[#C8A253] mb-4">
+              <h3 className="text-xs font-semibold tracking-[0.18em] uppercase text-[#E5C158] mb-4">
                 Horário & Agendamento
               </h3>
               <p className="text-sm text-[#D4D4D8] font-mono tabular-nums mb-1">
@@ -70,10 +76,14 @@ export function FooterAndFloatingWhatsApp() {
                 href={getWhatsAppBookingUrl()}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-2.5 px-5 py-3 text-xs font-semibold tracking-[0.08em] uppercase bg-[#C8A253] text-[#0A0A0A] hover:bg-[#D9B66A] transition-colors rounded-sm whitespace-nowrap focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#F5F5F2]"
+                className="group relative overflow-hidden inline-flex items-center justify-center gap-2.5 px-5 py-3 text-xs font-bold tracking-[0.1em] uppercase bg-gradient-to-r from-[#C8A253] via-[#E5C158] to-[#C8A253] text-[#050507] rounded-sm whitespace-nowrap focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#F5F5F2]"
               >
-                <WhatsAppIcon className="w-4 h-4 shrink-0" />
-                <span>Agendar pelo WhatsApp</span>
+                <span
+                  aria-hidden="true"
+                  className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 bg-gradient-to-r from-transparent via-white/40 to-transparent"
+                />
+                <WhatsAppIcon className="relative w-4 h-4 shrink-0" />
+                <span className="relative">Agendar pelo WhatsApp</span>
               </a>
             </div>
           </div>
@@ -88,20 +98,30 @@ export function FooterAndFloatingWhatsApp() {
         </div>
       </footer>
 
-      {/* Floating WhatsApp Action Button (bottom-right, compact for 15% mobile sticky cap) */}
-      <a
+      {/* Spring-Animated Floating WhatsApp Action Button */}
+      <motion.a
         href={getWhatsAppBookingUrl()}
         target="_blank"
         rel="noopener noreferrer"
         aria-label="Agendar horário pelo WhatsApp"
         title="Agendar horário pelo WhatsApp"
-        className="fixed bottom-5 right-5 z-40 inline-flex items-center justify-center gap-2.5 w-14 h-14 sm:w-auto sm:h-12 sm:px-5 rounded-full sm:rounded-sm bg-[#16A34A] hover:bg-[#15803D] text-white shadow-xl shadow-black/50 border border-white/15 transition-transform duration-150 hover:scale-[1.03] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C8A253]"
+        initial={{ opacity: 0, y: 24, scale: 0.9 }}
+        animate={{ opacity: 1, y: 0, scale: 1 }}
+        whileHover={{ scale: 1.04, y: -2 }}
+        whileTap={{ scale: 0.96 }}
+        transition={{
+          type: 'spring',
+          stiffness: 340,
+          damping: 24,
+          delay: 0.4,
+        }}
+        className="fixed bottom-5 right-5 z-40 inline-flex items-center justify-center gap-2.5 w-14 h-14 sm:w-auto sm:h-12 sm:px-5 rounded-full sm:rounded-sm bg-[#16A34A] hover:bg-[#15803D] text-white shadow-[0_12px_32px_rgba(22,163,74,0.35)] border border-white/20 backdrop-blur-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E5C158]"
       >
         <WhatsAppIcon className="w-6 h-6 sm:w-4 sm:h-4 shrink-0" />
-        <span className="hidden sm:inline text-xs font-semibold tracking-wider uppercase whitespace-nowrap">
+        <span className="hidden sm:inline text-xs font-bold tracking-wider uppercase whitespace-nowrap">
           Agendar WhatsApp
         </span>
-      </a>
+      </motion.a>
     </>
   );
 }
